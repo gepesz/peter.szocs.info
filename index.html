@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Peter Szocs | Homepage">
+    <meta name="author" content="Peter Szocs">
+
+    <!-- Title -->
+    <title>Peter</title>
+
+    <!-- CSS -->
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet" type="text/css">
+    <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700" rel="stylesheet" type="text/css">
+    <link href="css/app.css" rel="stylesheet" type="text/css">
+
+    <!-- JS -->
+    <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.min.js"></script>
+    <script src="js/animatedHeader.js"></script>
+    <script src="js/app.js"></script>
+
+    <!-- HTML5 Shiv & Respond.js: Support HTML5 elements and media queries in legacy IEs (< IE9) -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body id="page-top" class="index" ng-app="app" ng-controller="MainController">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header page-scroll">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand page-scroll" href="#page-top">Peter Szocs</a>
+            </div>
+
+            <!-- Collect the nav links, forms, and other content for toggling -->
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="hidden"><a href="#page-top"></a></li>
+                    <li><a class="page-scroll" href="#about">About</a></li>
+                    <li><a class="page-scroll" href="#music">Music</a></li>
+                    <li><a class="page-scroll" href="#contact">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="intro-text">
+                <div class="intro-lead-in">Welcome!</div>
+                <div class="intro-heading">It's Nice To Meet You</div>
+                <a href="#about" class="page-scroll btn btn-xl">About Me</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">About</h2>
+                    <h3 class="section-subheading text-muted">Who is this guy, anyway?</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="timeline">
+                        <li ng-repeat="achievement in achievements">
+                            <div class="timeline-image">
+                                <img class="img-circle img-responsive" ng-src="img/about/{{ achievement.imgUrl }}" alt="{{ achievement.imgAlt }}" />
+                            </div>
+                            <div class="timeline-panel">
+                                <div class="timeline-heading">
+                                    <h4 ng-bind="achievement.when"></h4>
+                                    <h4 class="subheading" ng-bind="achievement.title"></h4>
+                                </div>
+                                <div class="timeline-body">
+                                    <p class="text-muted" ng-bind="achievement.text"></p>
+                                </div>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="bg-light-gray">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Music</h2>
+                    <h3 class="section-subheading text-muted">Here is a sample of cool beats from around the world.</h3>
+                </div>
+            </div>
+            <div class="row">
+                
+                <div class="col-md-4 col-sm-6 portfolio-item" ng-repeat="song in songs">
+                    <a href="{{ song.src }}" class="portfolio-link" data-toggle="modal">{{ song.src }}</a>
+
+                    <!--<div class="embed-responsive embed-responsive-16by9">-->
+                    <!--    <iframe class="embed-responsive-item" ng-src="{{ song.src }}"></iframe>-->
+                    <!--</div>                    -->
+                    
+                    <div class="portfolio-caption">
+                        <h4 ng-bind="song.artist"></h4>
+                        <p class="text-muted" ng-bind="song.title"></p>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12 text-center">
+                    <h2 class="section-heading">Contact</h2>
+                    <h3 class="section-subheading text-muted">Use this form to say hi!</h3>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-12">
+                    <form name="contactForm" ng-submit="sendEmail(formData)" novalidate>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!--<pre>contactForm.name.$error = {{ contactForm.name.$error }}</pre>-->
+                                    <input type="text" name="name" placeholder="Your Name *" class="form-control"
+                                            ng-model="formData.name"
+                                            ng-minlength="2"
+                                            ng-maxlength="30"
+                                            maxlength="30"
+                                            ng-required="true">
+                                    <div class="help-block" ng-messages="contactForm.name.$error" ng-show="contactForm.name.$touched">
+                                        <p class="text-danger" ng-message="required">Please enter your name.</p>
+                                        <p class="text-danger" ng-message="minlength">Your name is too short.</p>
+                                        <div ng-messages-include="messages.html"></div>
+                                    </div>                                    
+                                </div>
+                                <div class="form-group">
+                                    <!--<pre>contactForm.email.$error = {{ contactForm.email.$error }}</pre>-->
+                                    <input type="email" name="email" placeholder="Your Email *" class="form-control"
+                                            ng-model="formData.email"
+                                            ng-minlength="5"
+                                            ng-maxlength="40"
+                                            maxlength="40"
+                                            ng-required="true">
+                                    <div class="help-block" ng-messages="contactForm.email.$error" ng-show="contactForm.email.$touched">
+                                        <p class="text-danger" ng-message="required">Please enter your email address.</p>
+                                        <p class="text-danger" ng-message="minlength">Your email address is too short.</p>
+                                        <div ng-messages-include="messages.html"></div>
+                                    </div>                                    
+                                </div>
+                                <div class="form-group">
+                                    <!--<pre>contactForm.phone.$error = {{ contactForm.phone.$error }}</pre>-->
+                                    <input type="tel" name="phone" placeholder="Your Phone *" class="form-control"
+                                            ng-model="formData.phone"
+                                            ng-minlength="5"
+                                            ng-maxlength="30"
+                                            maxlength="30"
+                                            ng-required="true">
+                                    <div class="help-block" ng-messages="contactForm.phone.$error" ng-show="contactForm.phone.$touched">
+                                        <p class="text-danger" ng-message="required">Please enter your phone number.</p>
+                                        <p class="text-danger" ng-message="minlength">Your phone number is too short.</p>
+                                        <div ng-messages-include="messages.html"></div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <!--<pre>contactForm.message.$error = {{ contactForm.message.$error }}</pre>-->
+                                    <textarea name="message" placeholder="Your Message *" class="form-control"
+                                            ng-model="formData.message"
+                                            ng-minlength="5"
+                                            ng-maxlength="1000"
+                                            maxlength="1000"
+                                            ng-required="true"></textarea>
+                                    <div class="help-block" ng-messages="contactForm.message.$error" ng-show="contactForm.message.$touched">
+                                        <p class="text-danger" ng-message="required">Please enter a message.</p>
+                                        <p class="text-danger" ng-message="minlength">Your message is too short.</p>
+                                        <div ng-messages-include="messages.html"></div>
+                                    </div>                                    
+                                </div>
+                            </div>
+                            <div class="clearfix"></div>
+                            <div class="col-lg-12 text-center">
+                                <!--<pre>contactForm.$invalid = {{ contactForm.$invalid }}</pre>-->
+                                <button type="submit" class="btn btn-xl" ng-disabled="contactForm.$invalid">Send Message</button>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="contactFormModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contactFormModalTitle">
+                        <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    <h4 class="modal-title" id="contactFormModalTitle">{{ contactFormModalTitle }}</h4>
+                                </div>
+                                <div class="modal-body">{{ contactFormModalBody }}</div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <span class="copyright">Copyright &copy; Peter Szocs 2015.</span>
+                </div>
+                <div class="col-md-4">
+                    <ul class="list-inline social-buttons">
+                        <li><a href="https://twitter.com/szocspeter"><i class="fa fa-twitter"></i></a></li>
+                        <li><a href="https://www.facebook.com/szocs.peter"><i class="fa fa-facebook"></i></a></li>
+                        <li><a href="https://www.linkedin.com/in/szocspeter"><i class="fa fa-linkedin"></i></a></li>
+                        <li><a href="https://github.com/gepesz"><i class="fa fa-github"></i></a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
