@@ -13,6 +13,14 @@
 
 /* globals angular */
 var app = angular.module("app", ["ngMessages"]);
+
+app.config(function($sceDelegateProvider) {
+    $sceDelegateProvider.resourceUrlWhitelist([
+        "self",
+        "https://www.youtube.com/**"
+    ]);
+});
+
 app.controller("MainController", function($scope, $http) {
 
     // Achievements
@@ -25,13 +33,13 @@ app.controller("MainController", function($scope, $http) {
 
     // Songs
     $scope.songs = [
-        { src: "http://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
-        { src: "http://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
-        { src: "http://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
+        { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
+        { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
+        { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
 
-        { src: "http://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
-        { src: "http://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
-        { src: "http://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
+        { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
+        { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
+        { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
     ];
 
     // Send email
@@ -68,5 +76,24 @@ app.controller("MainController", function($scope, $http) {
             $("#contactFormModal").modal("show");
         });
     };
+
+});
+
+/* jQuery */
+$(function() {
+
+    // Close the responsive menu on item click
+    $(".navbar-collapse ul li a").click(function() {
+        $(".navbar-toggle:visible").click();
+    });
+    
+    // Page scrolling feature (requires jQuery easing plugin)
+    $("a.page-scroll").bind("click", function(event) {
+        var $anchor = $(this);
+        $("html, body").stop().animate({
+            scrollTop: $($anchor.attr("href")).offset().top
+        }, 1500, "easeInOutExpo");
+        event.preventDefault();
+    });
 
 });
