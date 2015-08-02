@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Peter Szocs | Homepage">
     <meta name="author" content="Peter Szocs">
+    <base href="/">
 
     <!-- Title -->
     <title>Peter</title>
@@ -24,8 +25,9 @@
     <script src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-messages.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.3/angular-route.min.js"></script>
     <script src="js/animatedHeader.js"></script>
     <script src="js/app.js"></script>
 
@@ -36,14 +38,14 @@
     <![endif]-->
 </head>
 
-<body id="page-top" data-spy="scroll" data-target=".navbar-fixed-top" ng-app="app" ng-controller="MainController">
+<body id="top" data-spy="scroll" data-target=".navbar-fixed-top" ng-app="app" ng-controller="MainController">
 
     <!-- Navigation -->
     <nav class="navbar navbar-default navbar-fixed-top">
         <div class="container">
             <!-- Brand & responsive menu -->
             <div class="navbar-header">
-                <a class="navbar-brand page-scroll" href="#page-top">Peter Szocs</a>
+                <a class="navbar-brand page-scroll" href="#top">Peter Szocs</a>
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="sr-only">Toggle navigation</span>
                     <span class="icon-bar"></span>
@@ -100,6 +102,13 @@
                                 </div>
                             </div>
                         </li>
+                        <li class="timeline">
+                            <a href="resume.pdf" class="timeline-image">
+                                <h4>See
+                                    <br/>Full
+                                    <br/>Resume</h4>
+                            </a>
+                        </li>
                     </ul>
                 </div>
             </div>
@@ -112,7 +121,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Music</h2>
-                    <h3 class="section-subheading text-muted">Here is a sample of cool beats from around the world.</h3>
+                    <h3 class="section-subheading text-muted">Check out this quick sample of tracks.</h3>
                 </div>
             </div>
             <div class="row">
@@ -136,7 +145,7 @@
             <div class="row">
                 <div class="col-lg-12 text-center">
                     <h2 class="section-heading">Contact</h2>
-                    <h3 class="section-subheading text-muted">Use this form to say hi!</h3>
+                    <h3 class="section-subheading text-muted">Please use this form to say hi!</h3>
                 </div>
             </div>
             <div class="row">
@@ -155,7 +164,7 @@
                                     <div class="help-block" ng-messages="contactForm.name.$error" ng-show="contactForm.name.$touched">
                                         <p class="text-danger" ng-message="required">Please enter your name.</p>
                                         <p class="text-danger" ng-message="minlength">Your name is too short.</p>
-                                        <div ng-messages-include="messages.html"></div>
+                                        <div ng-messages-include="partials/form_messages.html"></div>
                                     </div>                                    
                                 </div>
                                 <div class="form-group">
@@ -169,7 +178,7 @@
                                     <div class="help-block" ng-messages="contactForm.email.$error" ng-show="contactForm.email.$touched">
                                         <p class="text-danger" ng-message="required">Please enter your email address.</p>
                                         <p class="text-danger" ng-message="minlength">Your email address is too short.</p>
-                                        <div ng-messages-include="messages.html"></div>
+                                        <div ng-messages-include="partials/form_messages.html"></div>
                                     </div>                                    
                                 </div>
                                 <div class="form-group">
@@ -183,7 +192,7 @@
                                     <div class="help-block" ng-messages="contactForm.phone.$error" ng-show="contactForm.phone.$touched">
                                         <p class="text-danger" ng-message="required">Please enter your phone number.</p>
                                         <p class="text-danger" ng-message="minlength">Your phone number is too short.</p>
-                                        <div ng-messages-include="messages.html"></div>
+                                        <div ng-messages-include="partials/form_messages.html"></div>
                                     </div>                                    
                                 </div>
                             </div>
@@ -199,7 +208,7 @@
                                     <div class="help-block" ng-messages="contactForm.message.$error" ng-show="contactForm.message.$touched">
                                         <p class="text-danger" ng-message="required">Please enter a message.</p>
                                         <p class="text-danger" ng-message="minlength">Your message is too short.</p>
-                                        <div ng-messages-include="messages.html"></div>
+                                        <div ng-messages-include="partials/form_messages.html"></div>
                                     </div>                                    
                                 </div>
                             </div>
@@ -210,31 +219,20 @@
                             </div>
                         </div>
                     </form>
-                    <div id="contactFormModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contactFormModalTitle">
-                        <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                                    <h4 class="modal-title" id="contactFormModalTitle">{{ contactFormModalTitle }}</h4>
-                                </div>
-                                <div class="modal-body">{{ contactFormModalBody }}</div>
-                                <div class="modal-footer">
-                                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <!-- Angular View -->
+    <ng-view></ng-view>
 
     <!-- Footer -->
     <footer>
         <div class="container">
             <div class="row">
                 <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; Peter Szocs 2015.</span>
+                    <span class="copyright">Copyright &copy; 2015 Peter Szocs.</span>
                 </div>
                 <div class="col-md-4">
                     <ul class="list-inline social-buttons">

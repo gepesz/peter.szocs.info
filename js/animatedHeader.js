@@ -30,6 +30,6 @@ var animatedHeader = {
 $(window).on('scroll', function(e) {
     if( !animatedHeader.didScroll ) {
 		animatedHeader.didScroll = true;
-		setTimeout( animatedHeader.scrollPage(), 250 );
+		setTimeout( animatedHeader.scrollPage(), 200 );
 	}
 });

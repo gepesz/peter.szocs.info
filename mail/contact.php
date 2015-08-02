@@ -32,11 +32,16 @@ if ( empty($errors) ) {
      // send email
      $to = "gepesz@hotmail.com";
      $email_subject = "Contact from your website!";
-     $email_body = "New message arrived from http://peter.szocs.info.\n\n";
-     $email_body .= "Name:  ".$name."\n";
-     $email_body .= "Email: ".$email_address."\n";
-     $email_body .= "Phone: ".$phone."\n\n";
-     $email_body .= $message;
+     $email_body = file_get_contents("email_template.html");
+     $email_body = str_replace("__NAME__", $name, $email_body);
+     $email_body = str_replace("__EMAIL__", $email_address, $email_body);
+     $email_body = str_replace("__PHONE__", $phone, $email_body);
+     $email_body = str_replace("__MESSAGE__", $message, $email_body);
+     // $email_body = "New message arrived from http://peter.szocs.info.\n\n";
+     // $email_body .= "Name:  ".$name."\n";
+     // $email_body .= "Email: ".$email_address."\n";
+     // $email_body .= "Phone: ".$phone."\n\n";
+     // $email_body .= $message;
      $headers = "From: ".$name." <".$email_address.">\n";
      $headers .= "Reply-To: ".$email_address;
      $retval = mail($to, $email_subject, $email_body, $headers);
