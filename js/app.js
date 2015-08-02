@@ -20,9 +20,11 @@ app.config(function($routeProvider, $locationProvider, $sceDelegateProvider) {
     $routeProvider
         .when("/", {
             controller: "MainController",
-            templateUrl: "partials/contact_form_modal.html" })
-        .when("/resume", { redirectTo: "/resume.pdf" })
-        .otherwise({ redirectTo: "/404.html" });
+            templateUrl: "partials/contact_form_modal.html"
+        })
+        .otherwise({
+            redirectTo: "/404.html"
+        });
     
     // Enable html5 mode
     $locationProvider.html5Mode(true);
