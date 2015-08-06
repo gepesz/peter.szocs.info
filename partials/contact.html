@@ -1,0 +1,103 @@
+<!-- Contact Section -->
+<section id="contact">
+
+    <!-- Form -->
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12 text-center">
+                <h2 class="section-heading">Contact</h2>
+                <h3 class="section-subheading text-muted">Please use this form to say hi!</h3>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <form name="contactForm" ng-submit="sendEmail(formData)" novalidate>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!--<pre>contactForm.name.$error = {{ contactForm.name.$error }}</pre>-->
+                                <input type="text" name="name" placeholder="Your Name *" class="form-control"
+                                        ng-model="formData.name"
+                                        ng-minlength="2"
+                                        ng-maxlength="30"
+                                        maxlength="30"
+                                        ng-required="true">
+                                <div class="help-block" ng-messages="contactForm.name.$error" ng-show="contactForm.name.$touched">
+                                    <p class="text-danger" ng-message="required">Please enter your name.</p>
+                                    <p class="text-danger" ng-message="minlength">Your name is too short.</p>
+                                    <div ng-messages-include="partials/form_messages.html"></div>
+                                </div>                                    
+                            </div>
+                            <div class="form-group">
+                                <!--<pre>contactForm.email.$error = {{ contactForm.email.$error }}</pre>-->
+                                <input type="email" name="email" placeholder="Your Email *" class="form-control"
+                                        ng-model="formData.email"
+                                        ng-minlength="5"
+                                        ng-maxlength="40"
+                                        maxlength="40"
+                                        ng-required="true">
+                                <div class="help-block" ng-messages="contactForm.email.$error" ng-show="contactForm.email.$touched">
+                                    <p class="text-danger" ng-message="required">Please enter your email address.</p>
+                                    <p class="text-danger" ng-message="minlength">Your email address is too short.</p>
+                                    <div ng-messages-include="partials/form_messages.html"></div>
+                                </div>                                    
+                            </div>
+                            <div class="form-group">
+                                <!--<pre>contactForm.phone.$error = {{ contactForm.phone.$error }}</pre>-->
+                                <input type="tel" name="phone" placeholder="Your Phone *" class="form-control"
+                                        ng-model="formData.phone"
+                                        ng-minlength="5"
+                                        ng-maxlength="30"
+                                        maxlength="30"
+                                        ng-required="true">
+                                <div class="help-block" ng-messages="contactForm.phone.$error" ng-show="contactForm.phone.$touched">
+                                    <p class="text-danger" ng-message="required">Please enter your phone number.</p>
+                                    <p class="text-danger" ng-message="minlength">Your phone number is too short.</p>
+                                    <div ng-messages-include="partials/form_messages.html"></div>
+                                </div>                                    
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <!--<pre>contactForm.message.$error = {{ contactForm.message.$error }}</pre>-->
+                                <textarea name="message" placeholder="Your Message *" class="form-control"
+                                        ng-model="formData.message"
+                                        ng-minlength="5"
+                                        ng-maxlength="1000"
+                                        maxlength="1000"
+                                        ng-required="true"></textarea>
+                                <div class="help-block" ng-messages="contactForm.message.$error" ng-show="contactForm.message.$touched">
+                                    <p class="text-danger" ng-message="required">Please enter a message.</p>
+                                    <p class="text-danger" ng-message="minlength">Your message is too short.</p>
+                                    <div ng-messages-include="partials/form_messages.html"></div>
+                                </div>                                    
+                            </div>
+                        </div>
+                        <div class="clearfix"></div>
+                        <div class="col-lg-12 text-center">
+                            <!--<pre>contactForm.$invalid = {{ contactForm.$invalid }}</pre>-->
+                            <button type="submit" class="btn btn-xl" ng-disabled="contactForm.$invalid">Send Message</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal -->
+    <div id="contactFormModal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="contactFormModalTitle">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title" id="contactFormModalTitle">{{ contactFormModalTitle }}</h4>
+                </div>
+                <div class="modal-body">{{ contactFormModalBody }}</div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</section>

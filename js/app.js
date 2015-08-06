@@ -12,20 +12,37 @@
  */
 
 /* globals angular */
-var app = angular.module("app", ["ngMessages", "ngRoute"]);
+var app = angular.module("app", ["ngMessages", "ui.router"]);
 
-app.config(function($routeProvider, $locationProvider, $sceDelegateProvider) {
+// App config
+app.config(function($stateProvider, $urlRouterProvider, $locationProvider, $sceDelegateProvider) {
     
     // Configure routes
-    $routeProvider
-        .when("/", {
-            controller: "MainController",
-            templateUrl: "partials/contact_form_modal.html"
-        })
-        .otherwise({
-            redirectTo: "/404.html"
-        });
+    $urlRouterProvider.otherwise("/404.html");
     
+    $stateProvider
+    .state("home", {
+        url: "/",
+        views: {
+            "about": {
+                controller: "MainCtrl",
+                templateUrl: "partials/about.html"
+            },
+            "portfolio": {
+                controller: "GitHubCtrl",
+                templateUrl: "partials/portfolio.html"
+            },
+            "music": {
+                controller: "MainCtrl",
+                templateUrl: "partials/music.html"
+            },
+            "contact": {
+                controller: "MainCtrl",
+                templateUrl: "partials/contact.html"
+            }
+        }
+    });
+
     // Enable html5 mode
     $locationProvider.html5Mode(true);
     
@@ -37,7 +54,8 @@ app.config(function($routeProvider, $locationProvider, $sceDelegateProvider) {
 
 });
 
-app.controller("MainController", function($scope, $http) {
+// Main controller
+app.controller("MainCtrl", function($scope, $http) {
 
     // Achievements
     $scope.achievements = [
@@ -49,13 +67,13 @@ app.controller("MainController", function($scope, $http) {
 
     // Songs
     $scope.songs = [
-        { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
-        { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
-        { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
+        // { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
+        // { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
+        // { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
 
-        { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
-        { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
-        { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
+        // { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
+        // { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
+        // { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
     ];
 
     // Send email
@@ -95,21 +113,42 @@ app.controller("MainController", function($scope, $http) {
 
 });
 
-/* jQuery */
+// GitHub controller
+app.controller("GitHubCtrl", function($scope, $http) {
+    
+    // Get repos
+    $http.get("https://api.github.com/users/gepesz/repos").success(function(data) {
+        $scope.repos = data;
+    });
+    
+    // Show repo
+    $scope.showRepo = function(repo) {
+        $scope.selectedRepo = repo;
+        $("#portfolioModal").modal("show");
+    };
+});
+
+// Animated scrolling directive
+app.directive("scrollOnClick", function() {
+    return {
+        restrict: "A",
+        link: function(scope, $elm, attrs) {
+            $elm.on("click", function() {
+                var $target = $(attrs.href);
+                $("html, body").animate({
+                    scrollTop: $target.offset().top
+                }, 1000, "easeInOutExpo");
+            });
+        }
+    };
+});
+
+// jQuery
 $(function() {
 
     // Close the responsive menu on item click
     $(".navbar-collapse ul li a").click(function() {
         $(".navbar-toggle:visible").click();
-    });
-    
-    // Page scrolling feature (requires jQuery easing plugin)
-    $("a.page-scroll").bind("click", function(event) {
-        var $anchor = $(this);
-        $("html, body").stop().animate({
-            scrollTop: $($anchor.attr("href")).offset().top
-        }, 1000, "easeInOutExpo");
-        event.preventDefault();
     });
 
 });
