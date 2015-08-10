@@ -134,6 +134,10 @@ app.directive("scrollOnClick", function() {
         restrict: "A",
         link: function(scope, $elm, attrs) {
             $elm.on("click", function() {
+                var expanded = ($(".navbar-collapse").attr("aria-expanded") === "true");
+                if ( expanded ) {
+                    $(".navbar-toggle:visible").click();
+                }
                 var $target = $(attrs.href);
                 $("html, body").animate({
                     scrollTop: $target.offset().top
@@ -141,14 +145,4 @@ app.directive("scrollOnClick", function() {
             });
         }
     };
-});
-
-// jQuery
-$(function() {
-
-    // Close the responsive menu on item click
-    $(".navbar-collapse ul li a").click(function() {
-        $(".navbar-toggle:visible").click();
-    });
-
 });
