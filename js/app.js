@@ -67,13 +67,13 @@ app.controller("MainCtrl", function($scope, $http) {
 
     // Songs
     $scope.songs = [
-        // { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
-        // { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
-        // { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
+        { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
+        { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
+        { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
 
-        // { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
-        // { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
-        // { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
+        { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
+        { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
+        { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
     ];
 
     // Send email
@@ -114,17 +114,97 @@ app.controller("MainCtrl", function($scope, $http) {
 });
 
 // GitHub controller
-app.controller("GitHubCtrl", function($scope, $http) {
+app.controller("GitHubCtrl", function($scope, $http, GitHubSvc) {
     
     // Get repos
-    $http.get("https://api.github.com/users/gepesz/repos").success(function(data) {
-        $scope.repos = data;
+    GitHubSvc.getReleases().then(function(repos) {
+        $scope.repos = repos;
     });
     
     // Show repo
     $scope.showRepo = function(repo) {
         $scope.selectedRepo = repo;
         $("#portfolioModal").modal("show");
+    };
+});
+
+// GitHub service
+app.factory("GitHubSvc", function($q, $http) {
+    
+    // GitHub locals
+    var apiUrl = "https://api.github.com/";
+    var userName = "gepesz";
+
+    // Returns GitHub data from the given url
+    function getData(url) {
+        var dfd = $q.defer();
+        $http.get(url)
+            .then(function(response) {
+                dfd.resolve(response.data);
+            });
+        return dfd.promise;
+    }
+
+    // Get all releases of a repo with given name
+    function getRepoReleases(repoName) {
+        return getData(apiUrl + "repos/" + userName + "/" + repoName + "/releases");
+    }
+    
+    // Get repo with given name
+    function getRepo(repoName) {
+        return getData(apiUrl + "repos/" + userName + "/" + repoName);
+    }
+
+    // Get all repos
+    function getRepos() {
+        return getData(apiUrl + "users/" + userName + "/repos");
+    }
+
+    // Get all releases
+    function getReleases() {
+        var dfd = $q.defer();
+        var arr = [];
+        getRepos().then(function(repos) {
+            repos.map(function(repo) {
+                if ( repo.homepage ) {
+                    // showcase this repo
+                    getRepoReleases(repo.name).then(function(releases) {
+                        releases.map(function(release) {
+                            
+                            // screenshot
+                            var index = release.body.indexOf("(https") + 1;
+                            var screenshot = release.body.substring(index);
+                            index = screenshot.indexOf(".png)") + 4;
+                            screenshot = screenshot.substring(0, index);
+                            
+                            // body
+                            index = release.body.indexOf("\r\n") + 2;
+                            var body = release.body.substring(index);
+
+                            // package it up                            
+                            arr.push({
+                                name: repo.name,
+                                description: repo.description,
+                                html_url: repo.html_url,
+                                homepage: repo.homepage,
+                                screenshot: screenshot,
+                                body: body,
+                                date: release.created_at.slice(0, 10)
+                            });
+                        });
+                        dfd.resolve(arr);
+                   });
+                }
+            });
+        });
+        return dfd.promise;
+    }
+    
+    return {
+        getRepoReleases: getRepoReleases,
+        getRepo: getRepo,
+        getRepos: getRepos,
+        getReleases: getReleases
     };
 });
 
