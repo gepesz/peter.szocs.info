@@ -46,7 +46,7 @@
                             <li>Demo: <a ng-href="{{ selectedRepo.homepage }}">{{ selectedRepo.homepage }}</a></li>
                             <li>Source: <a ng-href="{{ selectedRepo.html_url }}">{{ selectedRepo.name }}</a></li>
                         </ul>
-                        <p>Date: {{ selectedRepo.date }}</p>
+                        <p class="text-muted">&copy; {{ selectedRepo.date }} {{ selectedRepo.licenseName }}</p>
                         <button type="button" class="btn btn-primary" data-dismiss="modal"><i class="fa fa-times"></i> Close Project</button>
                     </div>
                 </div>
