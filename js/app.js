@@ -68,13 +68,13 @@ app.controller("MainCtrl", function($scope, $http) {
 
     // Songs
     $scope.songs = [
-        { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
-        { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
-        { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
+        // { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
+        // { src: "https://www.youtube.com/embed/F7Gl-IQY9rw", artist: "Nayo",                          title: "African Girl" },
+        // { src: "https://www.youtube.com/embed/HNN-lCCYYNo", artist: "Bonde da Stronda ft. Mr Catra", title: "Mansão Thug Stronda"},
 
-        { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
-        { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
-        { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
+        // { src: "https://www.youtube.com/embed/XyWED2RD3XY", artist: "Erick Morillo",                 title: "Live Your Life" },
+        // { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
+        // { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
     ];
 
     // Send email
@@ -121,7 +121,7 @@ app.controller("GitHubCtrl", function($scope, $http, GitHubSvc) {
         name: "chat",
         description: "Short description of the repo",
         html_url: "https://github.com/gepesz/chat",
-        homepage: "https://github.com/gepesz/chat",
+        homepage: "http://cairo.peterszocs.com",
         screenshot: "https://cloud.githubusercontent.com/assets/12737838/9482758/7ba4804a-4b65-11e5-81cf-ee29039efc39.png",
         body: "This is the detailed description of the repository.",
         date: "2015-08-15",
@@ -238,20 +238,39 @@ app.factory("GitHubSvc", function($q, $http) {
 });
 
 // Animated scrolling directive
-app.directive("scrollOnClick", function() {
-    return {
-        restrict: "A",
-        link: function(scope, $elm, attrs) {
-            $elm.on("click", function() {
-                var expanded = ($(".navbar-collapse").attr("aria-expanded") === "true");
-                if ( expanded ) {
-                    $(".navbar-toggle:visible").click();
-                }
-                var $target = $(attrs.href);
-                $("html, body").animate({
-                    scrollTop: $target.offset().top
-                }, 1000, "easeInOutExpo");
-            });
-        }
-    };
+// app.directive("scrollOnClick", function() {
+//     return {
+//         restrict: "A",
+//         link: function(scope, $elm, attrs) {
+//             $elm.on("click", function() {
+//                 var expanded = ($(".navbar-collapse").attr("aria-expanded") === "true");
+//                 if ( expanded ) {
+//                     $(".navbar-toggle:visible").click();
+//                 }
+//                 var $target = $(attrs.href);
+//                 $("html, body").animate({
+//                     scrollTop: $target.offset().top
+//                 }, 1000, "easeInOutExpo");
+//             });
+//         }
+//     };
+// });
+
+// jQuery
+$(function() {
+
+    // Close the responsive menu on item click
+    $(".navbar-collapse ul li a").click(function() {
+        $(".navbar-toggle:visible").click();
+    });
+    
+    // Page scrolling feature (requires jQuery easing plugin)
+    $("a.page-scroll").bind("click", function(event) {
+        var $anchor = $(this);
+        $("html, body").stop().animate({
+            scrollTop: $($anchor.attr("href")).offset().top
+        }, 1000, "easeInOutExpo");
+        event.preventDefault();
+    });
+
 });
