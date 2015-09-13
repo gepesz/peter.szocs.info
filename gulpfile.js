@@ -1,7 +1,6 @@
 var gulp = require('gulp');
-var plugins = require('gulp-load-plugins')({lazy: true});
+var plugins = require('gulp-load-plugins')({ lazy: true });
 var browserSync = require('browser-sync').create();
-var secrets = require('./secrets.json');
 
 // Create banner to insert as text before js & css files
 var pkg = require('./package.json');
@@ -62,13 +61,14 @@ gulp.task('browser-sync', function() {
 
 // Production deployment task using SSH
 gulp.task('deploy', function() {
+  var secrets = require('./secrets.json');
   var gulpSSH = new plugins.ssh({
     ignoreErrors: false,
     sshConfig: secrets.config
   });
 
   return gulpSSH
-    .shell(['cd /srv/www/peter.szocs.info/public', 'git pull', 'npm install', 'npm update', 'npm postinstall'], {filePath: 'shell.log'})
+    .shell(secrets.commands, {filePath: 'shell.log'})
     .pipe(gulp.dest('logs'));
 });
 
