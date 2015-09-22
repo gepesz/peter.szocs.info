@@ -4,16 +4,19 @@
 angular.module("app")
 .factory("GitHubSvc", function($q, $http) {
     
-    // GitHub locals
+    // locals
     var apiUrl = "https://api.github.com/";
     var userName = "gepesz";
 
-    // Returns GitHub data from the given url
+    // Returns data from the given url
     function getData(url) {
         var dfd = $q.defer();
         $http.get(url)
             .then(function(response) {
                 dfd.resolve(response.data);
+            })
+            .catch(function(err) {
+                dfd.reject(err);
             });
         return dfd.promise;
     }
