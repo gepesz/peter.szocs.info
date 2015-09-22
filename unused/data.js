@@ -4,7 +4,11 @@
 //     { when: "May 2010",       imgUrl: "nyu.jpg",       imgAlt: "NYU",       title: "Masters from NYU",  text: "While working at Bloomberg I attended NYU's Courant Institute, earning a Master of Science degree in Financial Mathematics.  This program is the de facto #1 quant school in America." },
 //     { when: "2011 - 2015",    imgUrl: "soccer.jpg",    imgAlt: "Soccer",    title: "Soccer",            text: "One of my biggest passions in life is soccer.  Not only do I captain and coach teams in New York City, but also have won several cups while making lifetime lasting friendships." }
 // ];
-// achievementsRef.set($scope.achievements);
+// var achievementsRef = new Firebase(FIREBASE_URL + "/achievements");
+// $scope.achievements.map(function(achievement) {
+//     achievementsRef.push().set(achievement);
+// });
+
 
 // $scope.songs = [
 //     { src: "https://www.youtube.com/embed/ceCGIk6tAxY", artist: "Navino",                        title: "Chillin' Time" },
@@ -14,4 +18,7 @@
 //     { src: "https://www.youtube.com/embed/jIVqsZxRPEA", artist: "Fergie",                        title: "Hold On (Rockit Edit)" },
 //     { src: "https://www.youtube.com/embed/KKDKAAFL_9E", artist: "R.A.W. ft. Amanda Wilson",      title: "Intoxicated" }
 // ];
-// songsRef.set($scope.songs);
+// var songsRef = new Firebase(FIREBASE_URL + "/songs");
+// $scope.songs.map(function(song) {
+//     songsRef.push().set(song);
+// });

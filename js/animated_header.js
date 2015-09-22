@@ -1,5 +1,5 @@
 /**
- * animatedHeader.js
+ * animated_hHeader.js
  * 
  * Simple jQuery component that will animate a fixed header on scroll.
  * CSS classes used:

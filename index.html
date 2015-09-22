@@ -62,76 +62,15 @@
 
 <body id="top" data-spy="scroll" data-target=".navbar-fixed-top" ng-app="app">
 
-    <!-- Navigation -->
-    <nav class="navbar navbar-default navbar-fixed-top">
-        <div class="container">
-            <!-- Brand & responsive menu -->
-            <div class="navbar-header">
-                <a class="navbar-brand page-scroll" scroll-on-click href="#top">Peter Szocs</a>
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-            </div>
-
-            <!-- Nav links -->
-            <div class="navbar-collapse collapse" aria-expanded="false">
-                <ul class="nav navbar-nav navbar-right">
-                    <li><a class="page-scroll" scroll-on-click href="#about">About</a></li>
-                    <li><a class="page-scroll" scroll-on-click href="#portfolio">Portfolio</a></li>
-                    <li><a class="page-scroll" scroll-on-click href="#music">Music</a></li>
-                    <li><a class="page-scroll" scroll-on-click href="#contact">Contact</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Header -->
-    <header>
-        <div class="container">
-            <div class="intro-text">
-                <div class="intro-lead-in">Welcome!</div>
-                <div class="intro-heading">It's Nice To Meet You</div>
-                <a class="btn btn-xl page-scroll" scroll-on-click href="#about">About Me</a>
-            </div>
-        </div>
-    </header>
 
     <!-- Views -->
+    <div ui-view="nav"></div>
+    <div ui-view="header"></div>
     <div ui-view="about"></div>
     <div ui-view="portfolio"></div>
     <div ui-view="music"></div>
     <div ui-view="contact"></div>
-    
-    <!-- Footer -->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <span class="copyright">Copyright &copy; 2015 Peter Szocs.</span>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline social-buttons">
-                        <li><a href="https://twitter.com/szocspeter"><i class="fa fa-twitter"></i></a></li>
-                        <li><a href="https://www.facebook.com/szocs.peter"><i class="fa fa-facebook"></i></a></li>
-                        <li><a href="https://www.linkedin.com/in/szocspeter"><i class="fa fa-linkedin"></i></a></li>
-                        <li><a href="https://github.com/gepesz"><i class="fa fa-github"></i></a></li>
-                    </ul>
-                </div>
-                <div class="col-md-4">
-                    <ul class="list-inline quicklinks">
-                        <li>
-                            <a href="http://24counter.com/vmap/1438798172/">
-                                <img class="img-rounded" src="http://24counter.com/map/view.php?id=1438798172" height="45">
-	                        </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
+    <div ui-view="footer"></div>
 
 </body>
 </html>

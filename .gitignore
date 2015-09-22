@@ -4,3 +4,4 @@ prod/
 logs/
 config/
 js/all.js
+js/config.js

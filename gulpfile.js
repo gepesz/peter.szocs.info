@@ -5,6 +5,7 @@ var plugins = require('gulp-load-plugins')({ lazy: true });
 
 // Create additional plugins
 var browserSync = require('browser-sync').create();
+var b2v = require('buffer-to-vinyl');
 var del = require('del');
 
 // Figure out the build environment
@@ -27,22 +28,24 @@ var paths = {
   },
   html: {
     src: ['index.html', 'partials/*.html'],
-    dest: 'prod/'
+    dest: './'
   },
   js: {
-    src: ['js/app.js', 'js/**/*.js'],
+    src: ['js/app.js', '!js/all.js', 'js/**/*.js'],
     dest: 'js/',
-    output: 'all.js'
+    output: 'all.js',
+    config: 'config.js'
   }
 };
 
-// Convert less files into css
+// Convert less files into css and stream to BrowserSync
 gulp.task('less', function() {
   return gulp.src(paths.less.src)
-  .pipe(plugins.less())
-  .pipe(plugins.if(isProd, plugins.minifyCss()))
-  .pipe(plugins.if(isProd, plugins.header(banner, { pkg : pkg } )))
-  .pipe(gulp.dest(paths.less.dest));
+    .pipe(plugins.less())
+    .pipe(plugins.if(isProd, plugins.minifyCss()))
+    .pipe(plugins.if(isProd, plugins.header(banner, { pkg : pkg } )))
+    .pipe(gulp.dest(paths.less.dest))
+    .pipe(plugins.if(!isProd, browserSync.stream()));
 });
 
 // Clean js
@@ -50,26 +53,42 @@ gulp.task('clean:js', function() {
   return del([paths.js.dest + paths.js.output]);
 });
 
-// Concat and uglify javascript files
-gulp.task('js', ['clean:js'], function() {
-  return gulp.src(paths.js.src)
-  .pipe(plugins.jshint())
-  .pipe(plugins.jshint.reporter('default'))
-  .pipe(plugins.concat(paths.js.output))
-  .pipe(plugins.if(isProd, plugins.ngAnnotate()))
-  .pipe(plugins.if(isProd, plugins.uglify()))
-  .pipe(plugins.if(isProd, plugins.header(banner, { pkg : pkg } )))
-  .pipe(gulp.dest(paths.js.dest));
+// Create angular constants based on the build environment
+gulp.task('config:js', function() {
+  var json = JSON.stringify({
+    "FIREBASE_URL": "https://peter-szocs-info.firebaseio.com/",
+    "IS_PROD": isProd
+  });
+  return b2v.stream(new Buffer(json), paths.js.config)
+    .pipe(plugins.ngConfig('app', { createModule: false }))
+    .pipe(plugins.if(isProd, plugins.uglify()))
+    .pipe(gulp.dest(paths.js.dest));
 });
 
-// Clean html
-gulp.task('clean:html', function() {
-  return del([paths.html.dest]);
+// Lint and concat js
+gulp.task('concat:js', function() {
+  return gulp.src(paths.js.src)
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('default'))
+    .pipe(plugins.concat(paths.js.output))
+    .pipe(gulp.dest(paths.js.dest));
+});
+
+// Full js task stack
+gulp.task('js', ['clean:js', 'config:js'], function() {
+  return gulp.src(paths.js.src)
+    .pipe(plugins.jshint())
+    .pipe(plugins.jshint.reporter('default'))
+    .pipe(plugins.concat(paths.js.output))
+    .pipe(plugins.if(isProd, plugins.ngAnnotate()))
+    .pipe(plugins.if(isProd, plugins.uglify()))
+    .pipe(plugins.if(isProd, plugins.header(banner, { pkg : pkg } )))
+    .pipe(gulp.dest(paths.js.dest));
 });
 
 // Minify html and replace references to minified javascript files
-gulp.task('html', ['clean:html'], function() {
-  return gulp.src(paths.html.src)
+gulp.task('html', function() {
+  return gulp.src(paths.html.src, { base: './' })
     .pipe(plugins.if(isProd, plugins.minifyHtml({ empty: true })))
     // .pipe(plugins.if(isProd, plugins.usemin({
     //   assetsDir: 'js',
@@ -79,11 +98,27 @@ gulp.task('html', ['clean:html'], function() {
 });
 
 // Static server
-gulp.task('browser-sync', function() {
+// http://paulsalaets.com/posts/injecting-styles-in-page-with-browser-sync/
+gulp.task('watch', function(gulpCallback) {
   browserSync.init({
-    server: {
-      baseDir: './'
-    }
+    // serve out of app/
+    server: './',
+    // launch default browser as soon as server is up
+    open: true
+  }, function callback() {
+    // (server is now up)
+
+    // when less files change run specified gulp task
+    gulp.watch(paths.less.src, ['less']);
+
+    // when js files change run specified gulp task
+    gulp.watch(paths.js.src, ['concat:js']);
+
+    // when html files change reload browsers
+    gulp.watch(paths.html.src, browserSync.reload);
+
+    // notify gulp that this task is done
+    gulpCallback();
   });
 });
 
@@ -101,13 +136,13 @@ gulp.task('deploy', function() {
 });
 
 // Rerun the task when a file changes
-gulp.task('watch', function() {
-  gulp.watch(paths.less, ['less']);
-  gulp.watch(paths.js, ['js']);
-});
+// gulp.task('watch', function() {
+//   gulp.watch(paths.less.src, ['less']);
+//   gulp.watch(paths.js.src, ['concat:js']);
+// });
 
 // Production install task
 gulp.task('production', ['less', 'js', 'html']);
 
 // The default task
-gulp.task('default', ['less', 'js']);
+gulp.task('default', ['less', 'js', 'watch']);
