@@ -3,5 +3,6 @@ node_modules/
 prod/
 logs/
 config/
+css/*.css
 js/all.js
 js/config.js

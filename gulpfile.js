@@ -23,7 +23,7 @@ var banner = '/**\n' +
 // Paths to assets
 var paths = {
   less: {
-    src: 'css/app.less',
+    src: 'css/**/*.less',
     dest: 'css/'
   },
   html: {
@@ -101,8 +101,10 @@ gulp.task('html', function() {
 // http://paulsalaets.com/posts/injecting-styles-in-page-with-browser-sync/
 gulp.task('watch', function(gulpCallback) {
   browserSync.init({
-    // serve out of app/
+    // serve out of ./
     server: './',
+    // serve on port 8080
+    port: 8080,
     // launch default browser as soon as server is up
     open: true
   }, function callback() {
@@ -135,11 +137,11 @@ gulp.task('deploy', function() {
     .pipe(gulp.dest('logs'));
 });
 
-// Rerun the task when a file changes
-// gulp.task('watch', function() {
-//   gulp.watch(paths.less.src, ['less']);
-//   gulp.watch(paths.js.src, ['concat:js']);
-// });
+gulp.task('status', function() {
+  plugins.git.status({args: '--porcelain'}, function (err, stdout) {
+    if (err) throw err;
+  });
+});
 
 // Production install task
 gulp.task('production', ['less', 'js', 'html']);
