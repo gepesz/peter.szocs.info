@@ -41,7 +41,7 @@
     "gulp-ssh": "^0.5.2",
     "gulp-uglify": "^1.4.0",
     "gulp-usemin": "^0.3.14",
-    "gulp-util": "^3.0.6" 
+    "gulp-util": "^3.0.6"
   },
   "dependencies": {
     "nodemailer": "^1.4.0"
