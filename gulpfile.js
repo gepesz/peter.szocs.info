@@ -12,19 +12,15 @@ var del = require('del');
 var isProd = !!plugins.util.env.production;
 console.log('Environment: ' + (isProd ? 'PROD' : 'DEV'));
 
-// Create banner to insert as text before js & css files
-var pkg = require('./package.json');
-var banner = '/**\n' +
-  ' * <%= pkg.author %> - <%= pkg.name %>\n' +
-  ' * <%= pkg.description %>\n' +
-  ' * @license <%= pkg.license %>\n' +
-  ' */\n';
-
 // Paths to assets
 var paths = {
+  pkg: {
+    json: './package.json'
+  },
   less: {
     src: 'css/**/*.less',
-    dest: 'css/'
+    dest: 'css/',
+    appFile: 'css/app.less'
   },
   html: {
     src: ['index.html', 'partials/*.html'],
@@ -38,9 +34,22 @@ var paths = {
   }
 };
 
+// Create banner to insert as text before js & css files
+var pkg = require(paths.pkg.json);
+var banner = '/**\n' +
+  ' * <%= pkg.author %> - <%= pkg.name %>\n' +
+  ' * <%= pkg.description %>\n' +
+  ' * @license <%= pkg.license %>\n' +
+  ' */\n';
+
+// Clean less: remove all .css files
+gulp.task('clean:less', function() {
+  return del([paths.less.dest + '*.css']);
+});
+
 // Convert less files into css and stream to BrowserSync
 gulp.task('less', function() {
-  return gulp.src(paths.less.src)
+  return gulp.src(paths.less.appFile)
     .pipe(plugins.less())
     .pipe(plugins.if(isProd, plugins.minifyCss()))
     .pipe(plugins.if(isProd, plugins.header(banner, { pkg : pkg } )))
@@ -124,8 +133,55 @@ gulp.task('watch', function(gulpCallback) {
   });
 });
 
-// Production deployment task using SSH
-gulp.task('deploy', function() {
+// Git commit & push local changes to Github
+gulp.task('git', function(callback) {
+  // show git status
+  plugins.git.status({}, function() {
+    gulp.src(paths.pkg.json, { read: false })
+      // prompt for files to git push
+      .pipe(plugins.prompt.prompt({
+        type: 'input',
+        name: 'files',
+        message: 'Which files do you want to git push?',
+        validate: function(files) {
+          if ( files == "" ) {
+            return false;
+          }
+          return true;
+        }
+      }, function(add) {
+        // execute git add
+        // console.log(add);
+        gulp.src(paths.pkg.json, { read: false })
+          .pipe(plugins.git.add({ args: add.files }))
+          // prompt for commit message
+          .pipe(plugins.prompt.prompt({
+            type: 'input',
+            name: 'message',
+            message: 'Enter commit message:'
+          }, function(commit) {
+            // execute git commit & git push
+            // console.log(commit);
+            gulp.src(paths.pkg.json, { read: false })
+              .pipe(plugins.git.commit(commit.message))
+              .on('end', function() {
+                this.pipe(plugins.git.push('origin', 'master', function (err) {
+                  if (err) {
+                    console.log('Git push failed!');
+                    throw err;
+                  } else {
+                    console.log('Git push successful.');
+                  }
+                  callback();
+                }));
+              });
+          }));
+      }));
+  });
+});
+
+// SSH to the production server and run commands
+gulp.task('ssh', ['git'], function() {
   var config = require('./config/config.json');
   var gulpSSH = new plugins.ssh({
     ignoreErrors: false,
@@ -137,14 +193,11 @@ gulp.task('deploy', function() {
     .pipe(gulp.dest('logs'));
 });
 
-gulp.task('status', function() {
-  plugins.git.status({args: '--porcelain'}, function (err, stdout) {
-    if (err) throw err;
-  });
-});
+// Deploy everything to production
+gulp.task('deploy', ['ssh']);
 
-// Production install task
+// The production task: run this on PROD
 gulp.task('production', ['less', 'js', 'html']);
 
-// The default task
+// The default task: run this on DEV
 gulp.task('default', ['less', 'js', 'watch']);
