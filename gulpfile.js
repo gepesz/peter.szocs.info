@@ -14,6 +14,9 @@ console.log('Environment: ' + (isProd ? 'PROD' : 'DEV'));
 
 // Paths to assets
 var paths = {
+  app: {
+    name: 'app'
+  },
   pkg: {
     json: './package.json'
   },
@@ -24,7 +27,8 @@ var paths = {
   },
   html: {
     src: ['index.html', 'partials/*.html'],
-    dest: './'
+    dest: './',
+    partials: 'partials/*.html'
   },
   js: {
     src: ['js/app.js', '!js/all.js', 'js/**/*.js'],
@@ -69,7 +73,7 @@ gulp.task('config:js', function() {
     "IS_PROD": isProd
   });
   return b2v.stream(new Buffer(json), paths.js.config)
-    .pipe(plugins.ngConfig('app', { createModule: false }))
+    .pipe(plugins.ngConfig(paths.app.name, { createModule: false }))
     .pipe(plugins.if(isProd, plugins.uglify()))
     .pipe(gulp.dest(paths.js.dest));
 });
@@ -95,14 +99,17 @@ gulp.task('js', ['clean:js', 'config:js'], function() {
     .pipe(gulp.dest(paths.js.dest));
 });
 
-// Minify html and replace references to minified javascript files
+// Template cache html files
+gulp.task('html:cache', function() {
+  return gulp.src(paths.html.partials)
+    .pipe(plugins.angularTemplatecache({ module: paths.app.name }))
+    .pipe(gulp.dest(paths.js.dest));
+});
+
+// Minify html
 gulp.task('html', function() {
   return gulp.src(paths.html.src, { base: './' })
     .pipe(plugins.if(isProd, plugins.minifyHtml({ empty: true })))
-    // .pipe(plugins.if(isProd, plugins.usemin({
-    //   assetsDir: 'js',
-    //   js: [plugins.uglify(), 'concat']
-    // })))
     .pipe(gulp.dest(paths.html.dest));
 });
 

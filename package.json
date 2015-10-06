@@ -26,6 +26,7 @@
     "buffer-to-vinyl": "^1.0.1",
     "del": "^2.0.2",
     "gulp": "^3.9.0",
+    "gulp-angular-templatecache": "^1.7.0",
     "gulp-concat": "^2.6.0",
     "gulp-git": "^1.4.0",
     "gulp-header": "^1.7.1",

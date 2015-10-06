@@ -14,7 +14,7 @@
  */
 
 // App config
-angular.module("app", ["ngMessages", "ui.router", "firebase"])
+angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "firebase"])
 .config(function($stateProvider, $urlRouterProvider, $locationProvider, $sceDelegateProvider) {
     
     // Configure routes
