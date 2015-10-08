@@ -502,8 +502,31 @@ section {
 
 // Music Section
 
-.carousel {
+// small screen: show carousel, hide youtube, hide revolution
+div#youtube {
+	display: none;
+}
+
+div#carousel {
+	display: block;
 	margin-bottom: 25px;
+}
+
+div#revolution {
+	display: none;
+}
+
+@media(min-width:768px) {
+	// large screen: show youtube, show revolution, hide carousel
+	div#youtube {
+		display: block;
+	}
+	div#carousel {
+		display: none;
+	}
+	div#revolution {
+		display: block;
+	}
 }
 
 // Contact Section

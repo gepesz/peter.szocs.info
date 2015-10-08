@@ -65,6 +65,19 @@ angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "fi
         "https://www.youtube.com/**"
     ]);
 
+})
+
+.run(function($rootScope, $injector) {
+
+    // Add OAuth tokens to headers automatically if present
+    // http://engineering.talis.com/articles/elegant-api-auth-angular-js/
+    $injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+        if ( $rootScope.oauth ) headersGetter().Authorization = "Bearer " + $rootScope.oauth.access_token;
+        if ( data ) {
+            return angular.toJson(data);
+        }
+    };
+
 });
 
 // jQuery
