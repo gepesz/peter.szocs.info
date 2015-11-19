@@ -14,8 +14,9 @@
  */
 
 // App config
-angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "firebase"])
-.config(function($stateProvider, $urlRouterProvider, $locationProvider, $sceDelegateProvider) {
+angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "satellizer", "firebase"])
+.config(function($urlRouterProvider, $stateProvider, $locationProvider, $sceDelegateProvider, $authProvider) {
+    // console.log("Angular config()");
     
     // Configure routes
     $urlRouterProvider.otherwise("/404.html");
@@ -65,20 +66,59 @@ angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "fi
         "https://www.youtube.com/**"
     ]);
 
-})
-
-.run(function($rootScope, $injector) {
-
-    // Add OAuth tokens to headers automatically if present
-    // http://engineering.talis.com/articles/elegant-api-auth-angular-js/
-    $injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
-        if ( $rootScope.oauth ) headersGetter().Authorization = "Bearer " + $rootScope.oauth.access_token;
-        if ( data ) {
-            return angular.toJson(data);
-        }
-    };
+    // Configure OAuth 2.0 providers
+    // $authProvider.oauth2({
+    //     name: "peter",
+    //     url: "/",
+    //     clientId: "9fb8bcfe24cbdb2f4786",
+    //     authorizationEndpoint: "https://github.com/login/oauth/authorize",
+    //     redirectUri: window.location.origin || window.location.protocol + '//' + window.location.host,
+    //     optionalUrlParams: ['scope'],
+    //     scope: ['user,gist'],
+    //     scopeDelimiter: ',',
+    //     responseType: 'token',
+    //     popupOptions: { width: 1020, height: 618 }
+    // });
 
 });
+
+
+// Github OAuth2 using the satellizer:
+
+// .run(function($rootScope, $injector, $auth) {
+//     console.log("Angular run()");
+
+//     $auth.authenticate("peter")
+//         .then(function(data) {
+//             console.log("inside");
+//             console.log(data);
+//         })
+//         .catch(function(err) {
+//             console.log("error");
+//             console.log(err);
+//         });
+//     var token = $auth.getToken();
+//     console.log("after");
+//     console.log(token);
+
+//     console.log("Angular run() - DONE");
+// });
+
+
+// Set OAuth tokens automatically if present:
+
+// .run(function($rootScope, $injector) {
+
+//     // Add OAuth tokens to headers automatically if present
+//     // http://engineering.talis.com/articles/elegant-api-auth-angular-js/
+//     $injector.get("$http").defaults.transformRequest = function(data, headersGetter) {
+//         if ( $rootScope.oauth ) headersGetter().Authorization = "Bearer " + $rootScope.oauth.access_token;
+//         if ( data ) {
+//             return angular.toJson(data);
+//         }
+//     };
+
+// });
 
 // jQuery
 $(function() {
