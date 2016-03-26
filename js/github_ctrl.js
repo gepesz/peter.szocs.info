@@ -14,7 +14,7 @@ angular.module("app")
         $scope.repos = [{
             name: "chat",
             description: "Short description of the repo",
-            html_url: "https://github.com/gepesz/chat",
+            html_url: "https://github.com/pitanyc/chat",
             homepage: "http://cairo.peterszocs.com",
             screenshot: "https://cloud.githubusercontent.com/assets/12737838/9482758/7ba4804a-4b65-11e5-81cf-ee29039efc39.png",
             body: "This is the detailed description of the repository.",

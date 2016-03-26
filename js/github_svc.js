@@ -6,7 +6,7 @@ angular.module("app")
     
     // locals
     var apiUrl = "https://api.github.com/";
-    var userName = "gepesz";
+    var userName = "pitanyc";
 
     // Returns data from the given url
     function getData(url) {

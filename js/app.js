@@ -4,7 +4,7 @@
  * app.js
  * 
  * Application code for http://peter.szocs.info
- * For details, see https://github.com/gepesz/peter.szocs.info
+ * For details, see https://github.com/pitanyc/peter.szocs.info
  *
  * Code released under the Apache 2.0 license.
  * http://www.apache.org/licenses/LICENSE-2.0
