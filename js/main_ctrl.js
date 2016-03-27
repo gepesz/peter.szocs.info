@@ -53,6 +53,10 @@ angular.module("app")
         });
     };
     
+    
+    // Date
+    $scope.date = new Date();
+    
     // Environment
     $scope.isProd = IS_PROD;
 
