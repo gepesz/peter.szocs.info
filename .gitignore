@@ -3,6 +3,7 @@ node_modules/
 prod/
 logs/
 config/
+vendor/
 css/*.css
 js/all.js
 js/config.js
