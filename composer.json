@@ -2,11 +2,5 @@
     "name": "peterszocs",
     "require": {
         "php": ">=5.0.0"
-    },
-    "scripts": {
-		"compile": [
-			"npm install",
-			"node_modules/gulp/bin/gulp production"
-		]
-	}    
+    }
 }
