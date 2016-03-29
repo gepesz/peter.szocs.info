@@ -9,7 +9,7 @@ var b2v = require('buffer-to-vinyl');
 var del = require('del');
 
 // Figure out the build environment
-var isProd = !!plugins.util.env.production;
+var isProd = (process.env.NODE_ENV === 'production');
 console.log('Environment: ' + (isProd ? 'PROD' : 'DEV'));
 
 // Paths to assets
