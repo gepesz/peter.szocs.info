@@ -1,7 +1,10 @@
 {
   "name": "Personal_Website",
-  "version": "1.0.0",
   "description": "If you see this, please contact me via http://peter.szocs.info",
+  "version": "1.0.0",
+  "engines": {
+    "node": "4.4.0"
+  },
   "main": "index.html",
   "scripts": {
     "postinstall": "gulp production",
