@@ -18,6 +18,13 @@ angular.module("app")
         $scope.songs = $firebaseArray(songsRef);
     }
 
+    // Soundclouds
+    $scope.soundclouds = [];
+    if ( IS_PROD ) {    // Prod
+        var soundcloudsRef = new Firebase(FIREBASE_URL + "/soundclouds");
+        $scope.soundclouds = $firebaseArray(soundcloudsRef);
+    }
+
     // Send email
     $scope.sendEmail = function(formData) {
         // console.log(formData);

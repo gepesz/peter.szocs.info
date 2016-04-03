@@ -1,0 +1,16 @@
+// Steps:
+// firebase login
+// firebase data:set /soundclouds soundcloud.json -f peter-szocs-info
+
+{
+  "private_ryan": {
+      "artist": "Private Ryan",
+      "src": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/237677220&amp;visual=true",
+      "title": "Soca Starter 2016"
+  },
+  "dj_zog": {
+      "artist": "DJ Zog",
+      "src": "https://w.soundcloud.com/player/?url=https%3A//api.soundcloud.com/tracks/246155847&amp;visual=true",
+      "title": "Throwback"
+  }
+}

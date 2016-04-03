@@ -60,10 +60,11 @@ angular.module("app", ["ngMessages", "ngTouch", "ui.router", "ui.bootstrap", "sa
     $locationProvider.html5Mode(true);
     $locationProvider.hashPrefix("!");
     
-    // Allow youtube content
+    // Allow content
     $sceDelegateProvider.resourceUrlWhitelist([
         "self",
-        "https://www.youtube.com/**"
+        "https://www.youtube.com/**",
+        "https://w.soundcloud.com/**"
     ]);
 
     // Configure OAuth 2.0 providers
