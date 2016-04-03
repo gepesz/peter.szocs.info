@@ -19,7 +19,7 @@
     "Szocs"
   ],
   "author": "Peter Szocs",
-  "license": "Apache License 2.0",
+  "license": "Apache-2.0",
   "bugs": {
     "url": "https://github.com/pitanyc/peter.szocs.info/issues"
   },
@@ -27,7 +27,13 @@
   "dependencies": {
     "browser-sync": "^2.9.1",
     "buffer-to-vinyl": "^1.0.1",
+    "compression": "^1.6.1",
     "del": "^2.0.2",
+    "dotenv": "^2.0.0",
+    "errorhandler": "^1.4.3",
+    "express": "^4.13.4",
+    "express-flash": "0.0.2",
+    "express-session": "^1.13.0",
     "gulp": "^3.9.0",
     "gulp-angular-templatecache": "^1.7.0",
     "gulp-concat": "^2.6.0",
@@ -45,6 +51,9 @@
     "gulp-ssh": "^0.5.2",
     "gulp-uglify": "^1.4.0",
     "gulp-usemin": "^0.3.14",
-    "gulp-util": "^3.0.6"
+    "gulp-util": "^3.0.6",
+    "morgan": "^1.7.0",
+    "nodemailer": "^2.3.0",
+    "path": "^0.12.7"
   }
 }

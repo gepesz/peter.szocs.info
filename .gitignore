@@ -1,9 +1,24 @@
-.c9/
-node_modules/
+# Ignore Cloud9 
+###############
+.c9
+
+# Ignore .env
+#############
+.env
+
+# Ignore Node & Bower
+#####################
+node_modules
+bower_components
+
+# Ignore build dirs
+###################
 prod/
 logs/
-config/
 vendor/
-css/*.css
-js/all.js
-js/config.js
+
+# Ignore generated files
+########################
+*.css
+all.js
+config.js
