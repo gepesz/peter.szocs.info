@@ -42,7 +42,7 @@ app.use(express.static(path.join(__dirname, '../client'), {
 
 // HOME -----------------------------------------------
 app.get('/', function(req, res, next) {
-    res.render('../client/index.html');
+    res.send('../client/index.html');
 });
 
 // MAIL -----------------------------------------------
@@ -62,6 +62,12 @@ app.post('/mail', function(req, res, next) {
         .catch(function(err) {
             res.send(err);
         });
+});
+
+// catch 404 and redirect to 404 page
+app.use(function(req, res, next) {
+    res.status(404);
+    res.redirect('404.html');
 });
 
 // setup error handlers
