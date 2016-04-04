@@ -21,18 +21,18 @@ var paths = {
     json: './package.json'
   },
   less: {
-    src: 'css/**/*.less',
-    dest: 'css/',
-    appFile: 'css/app.less'
+    src: './src/client/css/**/*.less',
+    dest: './src/client/css/',
+    appFile: './src/client/css/app.less'
   },
   html: {
-    src: ['index.html', 'partials/*.html'],
-    dest: './',
-    partials: 'partials/*.html'
+    src: ['./src/client/index.html', './src/client/partials/*.html'],
+    dest: './src/client/',
+    partials: './src/client/partials/*.html'
   },
   js: {
-    src: ['js/app.js', '!js/all.js', 'js/**/*.js'],
-    dest: 'js/',
+    src: ['./src/client/js/app.js', '!./src/client/js/all.js', './src/client/js/**/*.js'],
+    dest: './src/client/js/',
     output: 'all.js',
     config: 'config.js'
   }

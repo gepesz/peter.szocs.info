@@ -30,7 +30,7 @@ angular.module("app")
         // console.log(formData);
 
         $http({ method  : "POST",
-                url     : "/mail/contact.php",
+                url     : "/mail",
 	            data    : $.param(formData),
 	            headers : { "Content-Type": "application/x-www-form-urlencoded" }
 	    }).success(function(data) {
