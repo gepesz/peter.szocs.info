@@ -50,7 +50,7 @@ function sendMail(name, from, phone, message) {
 
                 // prepare email
                 var email = {
-                    to: process.env.EMAIL_FROM_URL,
+                    to: process.env.EMAIL_TO_URL,
                     from: from,
                     subject: process.env.EMAIL_SUBJECT_TEXT,
                     text: message,

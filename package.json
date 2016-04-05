@@ -1,13 +1,13 @@
 {
-  "name": "Personal_Website",
-  "description": "If you see this, please contact me via http://peter.szocs.info",
+  "name": "peter-szocs-info",
+  "description": "Personal website of https://github.com/pitanyc",
   "version": "1.0.0",
   "engines": {
     "node": "4.4.0"
   },
   "main": "index.html",
   "scripts": {
-    "postinstall": "gulp production",
+    "postinstall": "gulp $NODE_ENV",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

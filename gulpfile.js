@@ -7,6 +7,7 @@ var plugins = require('gulp-load-plugins')({ lazy: true });
 var browserSync = require('browser-sync').create();
 var b2v = require('buffer-to-vinyl');
 var del = require('del');
+var spawn = require('child_process').spawn;
 
 // Figure out the build environment
 var isProd = (process.env.NODE_ENV === 'production');
@@ -21,18 +22,25 @@ var paths = {
     json: './package.json'
   },
   less: {
-    src: './src/client/css/**/*.less',
-    dest: './src/client/css/',
-    appFile: './src/client/css/app.less'
+    src: './src/client/stylesheets/**/*.less',
+    dest: './src/client/stylesheets/',
+    appFile: './src/client/stylesheets/app.less'
   },
   html: {
-    src: ['./src/client/index.html', './src/client/partials/*.html'],
+    src: [
+      './src/client/index.html',
+      './src/client/partials/*.html'
+    ],
     dest: './src/client/',
     partials: './src/client/partials/*.html'
   },
   js: {
-    src: ['./src/client/js/app.js', '!./src/client/js/all.js', './src/client/js/**/*.js'],
-    dest: './src/client/js/',
+    src: [
+      './src/client/javascripts/app.js',
+      '!./src/client/javascripts/all.js',
+      './src/client/javascripts/**/*.js'
+    ],
+    dest: './src/client/javascripts/',
     output: 'all.js',
     config: 'config.js'
   }
@@ -45,6 +53,9 @@ var banner = '/**\n' +
   ' * <%= pkg.description %>\n' +
   ' * @license <%= pkg.license %>\n' +
   ' */\n';
+
+// Node server
+var node = null;
 
 // Clean less: remove all .css files
 gulp.task('clean:less', function() {
@@ -115,14 +126,10 @@ gulp.task('html', function() {
 
 // Static server
 // http://paulsalaets.com/posts/injecting-styles-in-page-with-browser-sync/
-gulp.task('watch', function(gulpCallback) {
+gulp.task('watch', ['node'], function(done) {
   browserSync.init({
-    // serve out of ./
-    server: './',
-    // serve on port 8080
-    port: 8080,
-    // launch default browser as soon as server is up
-    open: true
+    proxy: 'https://peter-szocs-info-gepesz.c9users.io/',
+    port: 4000
   }, function callback() {
     // (server is now up)
 
@@ -136,75 +143,26 @@ gulp.task('watch', function(gulpCallback) {
     gulp.watch(paths.html.src, browserSync.reload);
 
     // notify gulp that this task is done
-    gulpCallback();
+    done();
   });
 });
 
-// Git commit & push local changes to Github
-gulp.task('git', function(callback) {
-  // show git status
-  plugins.git.status({}, function() {
-    gulp.src(paths.pkg.json, { read: false })
-      // prompt for files to git push
-      .pipe(plugins.prompt.prompt({
-        type: 'input',
-        name: 'files',
-        message: 'Which files do you want to git push?',
-        validate: function(files) {
-          if ( files == "" ) {
-            return false;
-          }
-          return true;
-        }
-      }, function(add) {
-        // execute git add
-        // console.log(add);
-        gulp.src(paths.pkg.json, { read: false })
-          .pipe(plugins.git.add({ args: add.files }))
-          // prompt for commit message
-          .pipe(plugins.prompt.prompt({
-            type: 'input',
-            name: 'message',
-            message: 'Enter commit message:'
-          }, function(commit) {
-            // execute git commit & git push
-            // console.log(commit);
-            gulp.src(paths.pkg.json, { read: false })
-              .pipe(plugins.git.commit(commit.message))
-              .on('end', function() {
-                this.pipe(plugins.git.push('origin', 'master', function (err) {
-                  if (err) {
-                    console.log('Git push failed!');
-                    throw err;
-                  } else {
-                    console.log('Git push successful.');
-                  }
-                  callback();
-                }));
-              });
-          }));
-      }));
+// Start node server via foreman
+gulp.task('node', function() {
+  if (node) node.kill();
+  node = spawn('nf', ['start'], { stdio: 'inherit' });
+  node.on('close', function (code) {
+    if (code === 8) {
+      gulp.log('Error detected, waiting for changes...');
+    }
   });
 });
-
-// SSH to the production server and run commands
-gulp.task('ssh', ['git'], function() {
-  var config = require('./config/config.json');
-  var gulpSSH = new plugins.ssh({
-    ignoreErrors: false,
-    sshConfig: config.server.sshConfig
-  });
-
-  return gulpSSH
-    .shell(config.server.commands, {filePath: 'shell.log'})
-    .pipe(gulp.dest('logs'));
-});
-
-// Deploy everything to production
-gulp.task('deploy', ['ssh']);
 
 // The production task: run this on PROD
 gulp.task('production', ['less', 'js', 'html']);
 
-// The default task: run this on DEV
-gulp.task('default', ['less', 'js', 'watch']);
+// The development task: run this on DEV
+gulp.task('development', ['less', 'js', 'watch']);
+
+// The default task
+gulp.task('default', ['development']);
