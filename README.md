@@ -1,5 +1,8 @@
 # Personal Website
 
+![](https://david-dm.org/pitanyc/peter.szocs.info.svg)
+
+
 [This website](http://peter.szocs.info) is the personal home page of [Peter Szocs](http://peter.szocs.info/).  It features several content sections, 
 a responsive portfolio grid with hover effects, full page portfolio item modals, photos, music and a working contact form.
 
