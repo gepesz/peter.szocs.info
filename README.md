@@ -1,7 +1,8 @@
 # Personal Website
 
-![](https://david-dm.org/pitanyc/peter.szocs.info.svg)
-
+[![Dependencies](https://david-dm.org/pitanyc/peter.szocs.info.svg)](https://raw.githubusercontent.com/pitanyc/peter.szocs.info/master/package.json)
+[![GitHub issues](https://img.shields.io/github/issues/pitanyc/peter.szocs.info.svg)](https://github.com/pitanyc/peter.szocs.info/issues)
+[![GitHub license](https://img.shields.io/badge/license-Apache%202-blue.svg)](https://raw.githubusercontent.com/pitanyc/peter.szocs.info/master/LICENSE.md)
 
 [This website](http://peter.szocs.info) is the personal home page of [Peter Szocs](http://peter.szocs.info/).  It features several content sections, 
 a responsive portfolio grid with hover effects, full page portfolio item modals, photos, music and a working contact form.
