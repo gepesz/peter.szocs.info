@@ -1,6 +1,7 @@
 // Steps:
 // firebase login
 // firebase data:set /soundclouds soundcloud.json -f peter-szocs-info
+// firebase data:get /repos -f peter-szocs-info > repos.json
 
 {
   "private_ryan": {

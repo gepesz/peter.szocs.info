@@ -1,0 +1,68 @@
+{
+    "animated-header": {
+        "body": "On scroll animated header using jQuery.  It animates a fixed header's size on scroll.",
+        "date": "2015-08-18",
+        "description": "Responsive on-scroll animated header component.",
+        "homepage": "https://animated-header.herokuapp.com/",
+        "html_url": "https://github.com/pitanyc/animated-header",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "animated-header",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482750/60ff08a0-4b65-11e5-9486-cbb126e0cf63.png"
+    },
+    "chat": {
+        "body": "This is a fully working web chat application. It's a feature rich, client/server Javascript/Java app with smileys, sounds, blinker, standard & custom buddy icons, offline messages, translations, and so forth.",
+        "date": "2015-08-18",
+        "description": "Javascript web chat application.",
+        "homepage": "http://cairo.peterszocs.com",
+        "html_url": "https://github.com/pitanyc/chat",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "chat",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482758/7ba4804a-4b65-11e5-81cf-ee29039efc39.png"
+    },
+    "desktop": {
+        "body": "I wrote this web app before chromebooks and chrome existed. It started as a business project idea in college at the Wharton School at UPenn. The idea was to create a web application that would replace one's need for a full blown laptop or desktop. It has integrated file system, photos, music playback, and the usual things you would expect from any modern day OS.",
+        "date": "2015-08-18",
+        "description": "Chromebook desktop application",
+        "homepage": "http://desktop.zlocker.com",
+        "html_url": "https://github.com/pitanyc/desktop",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "desktop",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482793/ea006194-4b65-11e5-827f-4d84f4fadf90.png"
+    },
+    "tech-hub": {
+        "body": "Tech Hub is an issue tracking system. Just as JIRA, Bugzilla and many others, it supports issue tracking on different projects by various users. Administrators have access to additional features such as running progress resports on issues, projects and the like.",
+        "date": "2015-08-18",
+        "description": "Issue tracker system",
+        "homepage": "http://hub.zlocker.com",
+        "html_url": "https://github.com/pitanyc/tech-hub",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "tech-hub",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482818/1e210852-4b66-11e5-8652-3ae635682e67.png"
+    },
+    "peter-szocs-info": {
+        "body": "This website is the personal home page of Peter Szocs. It features several content sections, a responsive portfolio grid with hover effects, full page portfolio item modals, photos, music and a working contact form.",
+        "date": "2015-08-10",
+        "description": "Source of http://peter.szocs.info",
+        "homepage": "http://peter.szocs.info",
+        "html_url": "https://github.com/pitanyc/peter.szocs.info",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "peter.szocs.info",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482803/ff5eec22-4b65-11e5-9cbb-4772d24dec08.png"
+    },
+    "peterszocs-com": {
+        "body": "This is the old website of Peter Szocs. It features Resume, Photos, Music and Contact sections with fully working contact form.",
+        "date": "2015-08-18",
+        "description": "Source of http://peterszocs.com",
+        "homepage": "http://peterszocs.com",
+        "html_url": "https://github.com/pitanyc/peterszocs.com",
+        "licenseName": "Apache License 2.0",
+        "licenseUrl": "https://api.github.com/licenses/apache-2.0",
+        "name": "peterszocs.com",
+        "screenshot": "https://cloud.githubusercontent.com/assets/12737838/9482823/3232ddd4-4b66-11e5-8f16-fb80074c4df1.png"
+    }
+}
