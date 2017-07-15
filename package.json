@@ -3,7 +3,7 @@
   "description": "Personal website of https://github.com/pitanyc",
   "version": "1.0.0",
   "engines": {
-    "node": "4.4.0"
+    "node": "6.11.1"
   },
   "main": "index.html",
   "scripts": {
