@@ -83,7 +83,7 @@ gulp.task('config:js', function() {
     "FIREBASE_URL": "https://peter-szocs-info.firebaseio.com/",
     "IS_PROD": isProd
   });
-  return b2v.stream(new Buffer(json), paths.js.config)
+  return b2v.stream(new Buffer.from(json), paths.js.config)
     .pipe(plugins.ngConfig(paths.app.name, { createModule: false }))
     .pipe(plugins.if(isProd, plugins.uglify()))
     .pipe(gulp.dest(paths.js.dest));
@@ -101,8 +101,8 @@ gulp.task('concat:js', function() {
 // Full js task stack
 gulp.task('js', ['clean:js', 'config:js'], function() {
   return gulp.src(paths.js.src)
-    .pipe(plugins.jshint())
-    .pipe(plugins.jshint.reporter('default'))
+    // .pipe(plugins.jshint())
+    // .pipe(plugins.jshint.reporter('default'))
     .pipe(plugins.concat(paths.js.output))
     .pipe(plugins.if(isProd, plugins.ngAnnotate()))
     .pipe(plugins.if(isProd, plugins.uglify()))
