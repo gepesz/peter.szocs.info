@@ -37,11 +37,11 @@ angular
                     }
                     $scope.contactFormModalTitle = "Oops ...";
                     $scope.contactFormModalBody  = "Sorry " + firstName + 
-                        ", it seems that my mail server is not responding.  Please try again later!";
+                        ", it seems that my mail server is not responding...  Please try again later!";
                 } else {
                     // success
                     $scope.contactFormModalTitle = "Success";
-                    $scope.contactFormModalBody  = "Your message has been sent.";
+                    $scope.contactFormModalBody  = "Your message has been sent!";
                 }
                 
                 // clear form
